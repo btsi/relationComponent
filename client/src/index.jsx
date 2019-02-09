@@ -4,7 +4,7 @@ import RelatedEntry from './components/related.jsx'
 import data from '../../mockData' // works!
 
 let styleSheet = {
-  width: "700px",
+  width: "635px",
 }
 
 let RelatedList = () => (
