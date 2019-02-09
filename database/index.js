@@ -1,5 +1,6 @@
+require('dotenv').config()
 let mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/gutsy-database');
+mongoose.connect(process.env.DB_URI);
 
 let db = mongoose.connection
 db.on('error', console.error.bind(console, "connection error"))
@@ -16,12 +17,26 @@ let repoSchema = mongoose.Schema({
   price: Number
 })
 
-let adventures = mongoose.model('Adventures', repoSchema);
+let Adventures = mongoose.model('Adventures', repoSchema);
+
+let insert = (data) => {
+  Adventures.collection.insertMany(data, {
+      ordered: true
+    })
+    .then(data => console.log('successfully posted to DB'))
+    .catch(err => console.log('error in DB insert'))
+}
 
 let retrieve = () => {
-  console.log('inside retrieve function in DB')
+  Adventures.find({}, (err, docs) => {
+    if (err) console.log('error finding the data in db')
+    else {
+      console.log('successful find of query, sending back: ', docs)
+    }
+  })
 }
 
 module.exports = {
-  retrieve: retrieve
+  retrieve: retrieve,
+  insert: insert
 }
