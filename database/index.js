@@ -27,11 +27,13 @@ let insert = (data) => {
     .catch(err => console.log('error in DB insert'))
 }
 
-let retrieve = () => {
-  Adventures.find({}, (err, docs) => {
+let retrieve = (payload, callback) => {
+  Adventures.find({
+    catagory: payload
+  }, (err, docs) => {
     if (err) console.log('error finding the data in db')
     else {
-      console.log('successful find of query, sending back: ', docs)
+      callback(null, docs)
     }
   })
 }

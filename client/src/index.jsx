@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import RelatedEntry from './components/related.jsx'
 import Axios from 'axios'
-import data from '../../mockData' // works!
+import adventures from '../../mockData.js' // works!
 
 let styleSheet = {
   width: "635px",
@@ -11,13 +11,15 @@ let styleSheet = {
 class RelatedList extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      data: adventures.events
+    }
   }
 
   handleClick(data) {
     //console.log('inside postData with: ', data) //works!
     Axios.get(`/photos/${data}`)
-      .then(data => console.log('GET method coming back with: ', data))
+      .then(collection => this.setState({ data: collection.data }))
   }
 
   postData(collection) {
@@ -28,8 +30,8 @@ class RelatedList extends React.Component {
   render() {
     return (
       <div style={styleSheet}>
-        <button onClick={() => this.postData(data.events)}>Populate Database</button>
-        {data.events.map((event, i) => (
+        {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */}
+        {this.state.data.map((event, i) => (
           <RelatedEntry handleClick={this.handleClick.bind(this)} key={i} data={event} />
         ))}
       </div>
