@@ -16,7 +16,7 @@ let repoSchema = mongoose.Schema({
   price: Number
 })
 
-let Repo = mongoose.model('Repo', repoSchema);
+let adventures = mongoose.model('Adventures', repoSchema);
 
 let retrieve = () => {
   console.log('inside retrieve function in DB')
