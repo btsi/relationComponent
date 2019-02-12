@@ -14,7 +14,13 @@ app.use(express.static(__dirname + '/../client/dist'))
 app.post('/photos', (req, res) => {
   //console.log('inside of server POST with: ', req.body) //works!!
   let data = req.body
-  db.insert(data)
+  db.insert(data, (err, results) => {
+    if (err) console.log('error inserting to DB')
+    else {
+      res.status(201)
+      res.send('successful insert to DB')
+    }
+  })
 })
 
 app.get('/photos/:catagory', (req, res) => {

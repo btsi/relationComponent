@@ -21,7 +21,8 @@ let Adventures = mongoose.model('Adventures', repoSchema);
 
 let insert = (data) => {
   Adventures.collection.insertMany(data, {
-      ordered: true
+      ordered: true,
+      upsert: true
     })
     .then(data => console.log('successfully posted to DB'))
     .catch(err => console.log('error in DB insert'))
