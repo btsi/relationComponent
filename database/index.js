@@ -19,6 +19,14 @@ let repoSchema = mongoose.Schema({
 
 let Adventures = mongoose.model('Adventures', repoSchema);
 
+let getAll = (callback) => {
+  Adventures.find({
+      catagory: 'flying'
+    })
+    .then(data => callback(null, data))
+    .catch(err => console.log('error in DB getAll'))
+}
+
 let insert = (data) => {
   Adventures.collection.insertMany(data, {
       ordered: true,
@@ -41,5 +49,6 @@ let retrieve = (payload, callback) => {
 
 module.exports = {
   retrieve: retrieve,
-  insert: insert
+  insert: insert,
+  getAll: getAll
 }

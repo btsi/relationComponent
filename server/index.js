@@ -35,4 +35,14 @@ app.get('/photos/:catagory', (req, res) => {
   })
 })
 
+app.get('/index', (req, res) => {
+  db.getAll((err, collection) => {
+    if (err) console.log('ERROR coming back from db.getAll()')
+    else {
+      let payload = collection
+      res.send(payload)
+    }
+  })
+})
+
 app.listen(port, () => console.log('listening to port: ', port))
