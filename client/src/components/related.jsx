@@ -22,7 +22,7 @@ let priceStyle = {
 
 let RelatedEntry = (props) => {
   return (
-    <div style={componentStyle} onClick={() => console.log('it\'s me! Gee!')}>
+    <div style={componentStyle} onClick={() => props.handleClick(props.data.catagory)}>
       <img style={imgStyle} src={props.data.image_URL}></img>
       <div>{props.data.title}</div>
       <div style={priceStyle}>${props.data.price}</div>
