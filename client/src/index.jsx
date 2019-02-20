@@ -16,6 +16,7 @@ class RelatedList extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      catagory: "flying",
       data: []
     }
   }
@@ -48,7 +49,7 @@ class RelatedList extends React.Component {
   render() {
     return (
       <div style={headerSheet}>
-        <Header />
+        <Header catagory={this.state.catagory} />
         <div style={styleSheet}>
           {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */}
           {this.state.data.map((event, i) => (

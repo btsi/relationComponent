@@ -8,7 +8,7 @@ db.once('open', (callback) => {
   console.log('Connected to Database --- from database/index.js')
 })
 
-let repoSchema = mongoose.Schema({
+let adventureSchema = mongoose.Schema({
   id: Number,
   title: String,
   catagory: String,
@@ -17,7 +17,15 @@ let repoSchema = mongoose.Schema({
   price: Number
 })
 
-let Adventures = mongoose.model('Adventures', repoSchema);
+let headerSchema = mongoose.Schema({
+  id: Number,
+  catagory: String,
+  image_URL: String
+})
+
+let Adventures = mongoose.model('Adventures', adventureSchema);
+let Headers = mongoose.model('Headers', headerSchema);
+
 
 let getAll = (callback) => {
   Adventures.find({
