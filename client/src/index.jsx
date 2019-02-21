@@ -45,7 +45,10 @@ class RelatedList extends React.Component {
   }
 
   componentDidMount() {
-    this.getData()
+    window.addEventListener('changeID', (event) => {
+      console.log('this is our eventID', event.detail)
+      // this.setState({ products: [...this.state.products, event.detail] });
+    }, false);
   };
 
 
