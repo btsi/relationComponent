@@ -7,7 +7,7 @@ let cors = require('cors')
 let app = express()
 let port = process.env.port || 3003
 
-const instance = process.env.AXIOS_LOCATION || 'http://ec2-3-86-240-133.compute-1.amazonaws.com'
+const server = process.env.AXIOS_LOCATION || 'http://ec2-3-86-240-133.compute-1.amazonaws.com'
 
 app.use(bodyParse.json())
 app.use(express.static(__dirname + '/../client/dist'))

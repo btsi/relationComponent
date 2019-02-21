@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import RelatedEntry from './components/related.jsx'
 import Header from './components/header.jsx'
 import Axios from 'axios'
-import adventures from '../../mockData.js' // works!
+//import adventures from '../../mockData.js' // works!
 let headerSheet = {
   width: "617px"
 }
@@ -51,7 +51,7 @@ class RelatedList extends React.Component {
       <div style={headerSheet}>
         <Header catagory={this.state.catagory} />
         <div style={styleSheet}>
-          <button onClick={() => this.postData(adventures.events)}>Populate Database</button>
+          {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */}
           {this.state.data.map((event, i) => (
             <RelatedEntry handleClick={this.handleClick.bind(this)} key={i} data={event} />
           ))}
