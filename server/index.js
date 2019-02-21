@@ -27,7 +27,7 @@ app.post('/photos', (req, res) => {
   })
 })
 
-app.get(`${instance}/photos/:catagory`, (req, res) => {
+app.get(`/photos/:catagory`, (req, res) => {
   //console.log('did it get in here?', req.params.catagory) // works!
   let payload = req.params.catagory
   db.retrieve(payload, (err, data) => {
@@ -39,7 +39,7 @@ app.get(`${instance}/photos/:catagory`, (req, res) => {
   })
 })
 
-app.get(`${instance}/index`, (req, res) => {
+app.get(`/index`, (req, res) => {
   db.getAll((err, collection) => {
     if (err) console.log('ERROR coming back from db.getAll()')
     else {
