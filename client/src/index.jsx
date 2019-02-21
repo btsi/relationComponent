@@ -4,6 +4,9 @@ import RelatedEntry from './components/related.jsx'
 import Header from './components/header.jsx'
 import Axios from 'axios'
 //import adventures from '../../mockData.js' // works!
+
+const server = process.env.AXIOS_LOCATION || 'http://ec2-3-86-240-133.compute-1.amazonaws.com:3003'
+
 let headerSheet = {
   width: "617px"
 }
@@ -23,7 +26,7 @@ class RelatedList extends React.Component {
 
   handleClick(data) {
     //console.log('inside postData with: ', data) //works!
-    Axios.get(`/photos/${data}`)
+    Axios.get(`${server}/photos/${data}`)
       .then(collection => this.setState({ data: collection.data }))
   }
 
@@ -34,7 +37,7 @@ class RelatedList extends React.Component {
 
 
   getData() {
-    Axios.get(`/index`)
+    Axios.get(`${server}/index`)
       .then(collection => {
         this.setState({ data: collection.data })
       })
