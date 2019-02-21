@@ -1,13 +1,17 @@
 let express = require('express')
 let bodyParse = require('body-parser')
 let db = require('../database/index')
+let cors = require('cors')
+
 
 let app = express()
 let port = process.env.port || 3003
 
+const instance = process.env.AXIOS_LOCATION || 'http://ec2-3-86-240-133.compute-1.amazonaws.com'
 
 app.use(bodyParse.json())
 app.use(express.static(__dirname + '/../client/dist'))
+app.use(cors())
 
 //USE PORT 3003!!!
 
@@ -23,7 +27,7 @@ app.post('/photos', (req, res) => {
   })
 })
 
-app.get('/photos/:catagory', (req, res) => {
+app.get(`${instance}/photos/:catagory`, (req, res) => {
   //console.log('did it get in here?', req.params.catagory) // works!
   let payload = req.params.catagory
   db.retrieve(payload, (err, data) => {
@@ -35,7 +39,7 @@ app.get('/photos/:catagory', (req, res) => {
   })
 })
 
-app.get('/index', (req, res) => {
+app.get(`${instance}/index`, (req, res) => {
   db.getAll((err, collection) => {
     if (err) console.log('ERROR coming back from db.getAll()')
     else {
