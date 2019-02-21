@@ -45,13 +45,14 @@ class RelatedList extends React.Component {
       .catch(err => console.log('error coming back from DB', err))
   }
 
+
   componentDidMount() {
-    handleClick(this.state.catagory)
+    this.getData()
     window.addEventListener('changeID', (event) => {
       //console.log('this is our eventID', event.detail)
-      this.setState({ catagory: event.detail[1] });
+      this.handleClick(event.detail[1])
+      //this.setState({ catagory: event.detail[1] });
     }, false);
-
   };
 
 
