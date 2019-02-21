@@ -16,7 +16,6 @@ let headerText = {
 let Header = (props) => {
   return (
     <div>
-      <img style={headerStyle} className="header" src="https://s3.amazonaws.com/adventure-catagory/flying.jpg"></img>
       <div style={headerText}>{props.catagory}</div>
     </div >
   )
