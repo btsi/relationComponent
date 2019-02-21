@@ -56,7 +56,7 @@ class RelatedList extends React.Component {
     window.addEventListener('changeID', (event) => {
       console.log('this is our eventID', event.detail)
       this.handleClick(event.detail[1])
-      //this.setState({ catagory: event.detail[1] });
+      this.setState({ catagory: event.detail[1] });
     }, false);
   };
 
