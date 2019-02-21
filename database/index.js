@@ -28,6 +28,7 @@ let Headers = mongoose.model('Headers', headerSchema);
 
 
 let getAll = (callback) => {
+  //console.log('about to go into DB')
   Adventures.find({
       catagory: 'flying'
     })
