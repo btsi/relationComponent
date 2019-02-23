@@ -8,6 +8,8 @@ let headerStyle = {
   "height": "80px",
   "marginLeft": "auto",
   "marginRight": "auto",
+  "borderRadius": "75px",
+  "paddingTop": "10px"
 }
 
 let hrStyle = {
@@ -21,7 +23,6 @@ let headerText = {
   "fontWeight": "bold",
   "textAlign": "center",
   "paddingTop": "10px",
-  "paddingBottom": "10px",
 }
 
 let getHeader = (target) => {
