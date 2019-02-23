@@ -25,14 +25,17 @@ class RelatedList extends React.Component {
     }
   }
 
-  selectAdventure(target, catagory) {
-    const clickEvent = new CustomEvent('changeID', { detail: [target, catagory] });
+  selectAdventure(id, catagory) {
+
+    const clickEvent = new CustomEvent('changeID', { detail: [id, catagory] });
     window.dispatchEvent(clickEvent)
+    handleClick(id, catagory)
+
   }
 
-  handleClick(id, data) {
+  handleClick(id, catagory) {
     //console.log('inside postData with: ', data) //works!
-    let currentID = data
+    let currentID = catagory
     Axios.get(`${server}/photos/${data}`)
       .then(collection => {
         let relatedArr = collection.data
@@ -75,7 +78,7 @@ class RelatedList extends React.Component {
     return (
       <div style={headerSheet}>
         <Header catagory={this.state.catagory} />
-        <div style={styleSheet}>
+        <div href="#" style={styleSheet}>
           {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */} {/* creates button to postData() */}
           {this.state.data.map((event, i) => {
             if (event.id === this.state.id) { return } else {
