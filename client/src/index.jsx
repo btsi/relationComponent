@@ -28,19 +28,19 @@ class RelatedList extends React.Component {
   selectAdventure(id, catagory) {
     const clickEvent = new CustomEvent('changeID', { detail: [id, catagory] });
     window.dispatchEvent(clickEvent)
-    this.render()
+    this.handleClick(id, catagory)
   }
 
-  // handleClick(id, catagory) {
-  //   //console.log('inside postData with: ', catagory) //works!
-  //   Axios.get(`${server}/photos/${catagory}`)
-  //     .then(collection => {
+  handleClick(id, catagory) {
+    //console.log('inside postData with: ', catagory) //works!
+    this.setState({ id: id })
+    Axios.get(`${server}/photos/${catagory}`)
+      .then(collection => {
+        this.setState({ data: collection.data })
+      })
+      .catch(() => console.log('Error in handleClick'))
 
-  //       this.setState({ data: collection.data })
-  //     })
-  //     .catch(() => console.log('Error in handleClick'))
-
-  // }
+  }
 
   postData(collection) {
     Axios.post('/photos', collection)
@@ -62,8 +62,8 @@ class RelatedList extends React.Component {
     this.getData()
     window.addEventListener('changeID', (event) => {
       //console.log('this is our eventID', event.detail)
-      //this.handleClick(event.detail[0], event.detail[1])
-      this.setState({ catagory: event.detail[1] });
+      this.handleClick(event.detail[0], event.detail[1])
+      this.setState({ id: event.detail[0], catagory: event.detail[1] });
     }, false);
   };
 
