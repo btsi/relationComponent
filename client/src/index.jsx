@@ -29,7 +29,7 @@ class RelatedList extends React.Component {
 
     const clickEvent = new CustomEvent('changeID', { detail: [id, catagory] });
     window.dispatchEvent(clickEvent)
-    handleClick(id, catagory)
+    this.handleClick(id, catagory)
 
   }
 
