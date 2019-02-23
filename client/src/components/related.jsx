@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 
 let imgStyle = {
+  "textOverflow": "ellipsis",
   "width": "300px",
   "height": "200px",
   "borderRadius": "2px",
