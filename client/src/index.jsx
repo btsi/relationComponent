@@ -33,17 +33,11 @@ class RelatedList extends React.Component {
 
   handleClick(id, catagory) {
     //console.log('inside postData with: ', catagory) //works!
-    let currentID = catagory
     Axios.get(`${server}/photos/${catagory}`)
       .then(collection => {
-        let relatedArr = collection.data
-        relatedArr.forEach(adventure => {
-          if (adventure.id === currentID) {
-
-          }
-        })
         this.setState({ data: collection.data })
       })
+
   }
 
   postData(collection) {
