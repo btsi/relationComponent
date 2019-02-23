@@ -20,6 +20,7 @@ let headerText = {
   "fontSize": "18px",
   "fontWeight": "bold",
   "textAlign": "center",
+  "paddingTop": "10px",
   "paddingBottom": "10px",
 }
 
