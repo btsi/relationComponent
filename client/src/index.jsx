@@ -30,10 +30,19 @@ class RelatedList extends React.Component {
     window.dispatchEvent(clickEvent)
   }
 
-  handleClick(data) {
+  handleClick(id, data) {
     //console.log('inside postData with: ', data) //works!
+    let currentID = data
     Axios.get(`${server}/photos/${data}`)
-      .then(collection => this.setState({ data: collection.data }))
+      .then(collection => {
+        let relatedArr = collection.data
+        relatedArr.forEach(adventure => {
+          if (adventure.id === currentID) {
+
+          }
+        })
+        this.setState({ data: collection.data })
+      })
   }
 
   postData(collection) {
@@ -55,7 +64,7 @@ class RelatedList extends React.Component {
     this.getData()
     window.addEventListener('changeID', (event) => {
       console.log('this is our eventID', event.detail)
-      this.handleClick(event.detail[1])
+      this.handleClick(event.detail[0], event.detail[1])
       this.setState({ catagory: event.detail[1] });
     }, false);
   };
@@ -66,7 +75,7 @@ class RelatedList extends React.Component {
       <div style={headerSheet}>
         <Header catagory={this.state.catagory} />
         <div style={styleSheet}>
-          {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */}
+          {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */} {/* creates button to postData() */}
           {this.state.data.map((event, i) => (
             <RelatedEntry selectAdventure={this.selectAdventure.bind(this)} key={i} data={event} />
           ))}
