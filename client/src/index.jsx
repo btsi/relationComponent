@@ -54,6 +54,7 @@ class RelatedList extends React.Component {
   getData() {
     Axios.get(`${server}/index`)
       .then(collection => {
+
         this.setState({ data: collection.data })
       })
       .catch(err => console.log('error coming back from DB', err))
@@ -76,9 +77,11 @@ class RelatedList extends React.Component {
         <Header catagory={this.state.catagory} />
         <div style={styleSheet}>
           {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */} {/* creates button to postData() */}
-          {this.state.data.map((event, i) => (
-            <RelatedEntry selectAdventure={this.selectAdventure.bind(this)} key={i} data={event} />
-          ))}
+          {this.state.data.map((event, i) => {
+            if (event.id === this.state.id) { return } else {
+              return <RelatedEntry selectAdventure={this.selectAdventure.bind(this)} key={i} data={event} />
+            }
+          })}
         </div>
       </div >
     )

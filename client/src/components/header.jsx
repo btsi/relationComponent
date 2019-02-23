@@ -1,5 +1,6 @@
 import React from 'react'
 import Adventures from '../../../mockData'
+import { SSL_OP_TLS_BLOCK_PADDING_BUG } from 'constants';
 
 let headerStyle = {
   "display": "block",
@@ -9,11 +10,17 @@ let headerStyle = {
   "marginRight": "auto",
 }
 
+let hrStyle = {
+  width: "60%",
+  marginLeft: "auto",
+  marginRight: "auto"
+}
+
 let headerText = {
   "fontSize": "18px",
   "fontWeight": "bold",
   "textAlign": "center",
-  "paddingBottom": "10px"
+  "paddingBottom": "10px",
 }
 
 let getHeader = (target) => {
@@ -34,6 +41,7 @@ let Header = (props) => {
     <div>
       <img src={getHeader(props.catagory)} style={headerStyle}></img>
       <div style={headerText}>{props.catagory}</div>
+      <hr></hr>
     </div >
   )
 }
