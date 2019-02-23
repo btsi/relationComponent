@@ -26,11 +26,9 @@ class RelatedList extends React.Component {
   }
 
   selectAdventure(id, catagory) {
-
     const clickEvent = new CustomEvent('changeID', { detail: [id, catagory] });
     window.dispatchEvent(clickEvent)
     this.handleClick(id, catagory)
-
   }
 
   handleClick(id, catagory) {
