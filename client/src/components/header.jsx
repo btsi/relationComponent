@@ -8,7 +8,7 @@ let headerStyle = {
   "height": "80px",
   "marginLeft": "auto",
   "marginRight": "auto",
-  "borderRadius": "75px",
+  "borderRadius": "50%",
   "paddingTop": "10px"
 }
 
