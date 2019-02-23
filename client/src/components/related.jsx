@@ -4,8 +4,8 @@ import axios from 'axios'
 let imgStyle = {
   "width": "300px",
   "height": "200px",
-  "borderRadius": "2px",
-  "paddingTop": "5px"
+  "borderRadius": "10px",
+  "paddingTop": "5px",
 }
 
 let componentStyle = {
