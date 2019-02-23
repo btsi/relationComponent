@@ -10,6 +10,7 @@ let imgStyle = {
 }
 
 let componentStyle = {
+  "textOverflow": "ellipsis",
   float: "left",
   width: "50%",
   cursor: "pointer",
