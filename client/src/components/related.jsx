@@ -20,6 +20,7 @@ let titleStyle = {
   whiteSpace: "no-wrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
+  fontSize: "10px"
 }
 
 let priceStyle = {
