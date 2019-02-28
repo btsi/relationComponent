@@ -14,8 +14,10 @@ const session = db.session;
       adventures.forEach(adv => {
         const advQuery = `MERGE (a:Adventure { title: "${adv.title}", image: "${
           adv.image_URL
-        }", description: "${adv.description}", price: "${adv.price}"})
-                          MERGE (c:Category {type: "${adv.catagory}"})
+        }", description: "${adv.description}", price: ${adv.price}, id: ${
+          adv.id
+        }, category: "${adv.category}"})
+                          MERGE (c:Category {type: "${adv.category}"})
                           MERGE (a)-[:BELONGS_TO]->(c)`;
         session.run(advQuery).catch(err => console.log(err));
       });

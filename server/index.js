@@ -1,51 +1,25 @@
-let express = require('express')
-let bodyParse = require('body-parser')
-let db = require('../database/index')
-let cors = require('cors')
+let express = require("express");
+let bodyParse = require("body-parser");
+// let db = require('../database/index')
+let cors = require("cors");
 
+const db = require("../database/neo4j");
 
-let app = express()
-let port = process.env.port || 3003
+let app = express();
+let port = process.env.port || 3003;
 
+app.use(bodyParse.json());
+app.use(express.static(__dirname + "/../client/dist"));
+app.use(cors());
 
-app.use(bodyParse.json())
-app.use(express.static(__dirname + '/../client/dist'))
-app.use(cors())
+app.get("/get/:category", (req, res) => {
+  let category = req.params.category;
+  db.get(category, (err, response) => {
+    if (err) console.log(err);
+    res.json(response);
+  });
+});
 
 //USE PORT 3003!!!
 
-app.post('/photos', (req, res) => {
-  //console.log('inside of server POST with: ', req.body) //works!!
-  let data = req.body
-  db.insert(data, (err, results) => {
-    if (err) console.log('error inserting to DB')
-    else {
-      res.status(201)
-      res.send('successful insert to DB')
-    }
-  })
-})
-
-app.get(`/photos/:catagory`, (req, res) => {
-  //console.log('did it get in here?', req.params.catagory) // works!
-  let payload = req.params.catagory
-  db.retrieve(payload, (err, data) => {
-    if (err) console.log('ERROR coming back from db.retrieve()')
-    else {
-      let payload = data
-      res.send(payload)
-    }
-  })
-})
-
-app.get(`/index`, (req, res) => {
-  db.getAll((err, collection) => {
-    if (err) console.log('ERROR coming back from db.getAll()')
-    else {
-      let payload = collection
-      res.send(payload)
-    }
-  })
-})
-
-app.listen(port, () => console.log('listening to port: ', port))
+app.listen(port, () => console.log("listening to port: ", port));

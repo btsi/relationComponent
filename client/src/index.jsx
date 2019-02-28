@@ -1,90 +1,86 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import RelatedEntry from './components/related.jsx'
-import Header from './components/header.jsx'
-import Axios from 'axios'
+import React from "react";
+import ReactDOM from "react-dom";
+import RelatedEntry from "./components/related.jsx";
+import Header from "./components/header.jsx";
+import Axios from "axios";
 //import adventures from '../../mockData.js' // works!
-
-const server = process.env.AXIOS_LOCATION || 'http://ec2-3-86-240-133.compute-1.amazonaws.com:3003'
 
 let headerSheet = {
   width: "617px"
-}
+};
 
 let styleSheet = {
   width: "635px"
-}
+};
 
 class RelatedList extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       id: 10,
-      catagory: "flying",
+      category: "flying",
       data: []
-    }
+    };
   }
 
-  selectAdventure(id, catagory) {
-    const clickEvent = new CustomEvent('changeID', { detail: [id, catagory] });
-    window.dispatchEvent(clickEvent)
-    this.handleClick(id, catagory)
+  selectAdventure(id, category) {
+    const clickEvent = new CustomEvent("changeID", { detail: [id, category] });
+    console.log(clickEvent);
+    window.dispatchEvent(clickEvent);
+    this.handleClick(id, category);
   }
 
-  handleClick(id, catagory) {
-    //console.log('inside postData with: ', catagory) //works!
-    this.setState({ id: id })
-    Axios.get(`${server}/photos/${catagory}`)
-      .then(collection => {
-        this.setState({ data: collection.data })
+  handleClick(id, category) {
+    Axios.get(`/get/${category}`)
+      .then(response => {
+        this.setState({ id: id, data: response.data });
       })
-      .catch(() => console.log('Error in handleClick'))
-
+      .catch(() => console.log("Error in handleClick"));
   }
-
-  postData(collection) {
-    Axios.post('/photos', collection)
-      .then(data => console.log('POST method coming back from db'))
-  }
-
 
   getData() {
-    Axios.get(`${server}/index`)
-      .then(collection => {
-
-        this.setState({ data: collection.data })
+    Axios.get(`/get/${this.state.category}`)
+      .then(response => {
+        this.setState({ data: response.data });
+        console.log("new data: ", response.data);
       })
-      .catch(err => console.log('error coming back from DB', err))
+      .catch(err => console.log("error coming back from DB", err));
   }
 
-
   componentDidMount() {
-    this.getData()
-    window.addEventListener('changeID', (event) => {
-      //console.log('this is our eventID', event.detail)
-      this.handleClick(event.detail[0], event.detail[1])
-      this.setState({ id: event.detail[0], catagory: event.detail[1] });
-    }, false);
-  };
-
+    this.getData();
+    window.addEventListener(
+      "changeID",
+      event => {
+        this.handleClick(event.detail[0], event.detail[1]);
+        this.setState({ id: event.detail[0], category: event.detail[1] });
+      },
+      false
+    );
+  }
 
   render() {
     return (
       <div style={headerSheet}>
-        <Header catagory={this.state.catagory} />
+        <Header category={this.state.category} />
         <div href="#" style={styleSheet}>
-          {/* <button onClick={() => this.postData(adventures.events)}>Populate Database</button> */} {/* creates button to postData() */}
-          {this.state.data.map((event, i) => {
-            if (event.id === this.state.id) { return } else {
-              return <RelatedEntry selectAdventure={this.selectAdventure.bind(this)} key={i} data={event} />
+          {this.state.data.map((adventure, key) => {
+            if (adventure.id.low === this.state.id) {
+              return;
+            } else {
+              return (
+                <RelatedEntry
+                  selectAdventure={this.selectAdventure.bind(this)}
+                  key={key}
+                  data={adventure}
+                />
+              );
             }
           })}
         </div>
-      </div >
-    )
+      </div>
+    );
   }
 }
 
-
-
-ReactDOM.render(<RelatedList />, document.getElementById('relation'))
+ReactDOM.render(<RelatedList />, document.getElementById("relation"));
