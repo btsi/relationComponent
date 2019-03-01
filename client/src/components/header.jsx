@@ -40,7 +40,7 @@ let getHeader = target => {
 let Header = props => {
   return (
     <div>
-      <img src={getHeader(props.category)} style={headerStyle} />
+      <img src={props.img} style={headerStyle} />
       <div style={headerText}>{props.category}</div>
       <hr />
     </div>

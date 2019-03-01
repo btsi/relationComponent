@@ -18,12 +18,14 @@ class RelatedList extends React.Component {
     super(props);
     this.state = {
       id: 10,
-      category: "flying",
+      category: "Sleek Shoes",
+      cat_img: "",
       data: []
     };
   }
 
   selectAdventure(id, category) {
+    console.log(id, category);
     const clickEvent = new CustomEvent("changeID", { detail: [id, category] });
     console.log(clickEvent);
     window.dispatchEvent(clickEvent);
@@ -33,7 +35,7 @@ class RelatedList extends React.Component {
   handleClick(id, category) {
     Axios.get(`/get/${category}`)
       .then(response => {
-        this.setState({ id: id, data: response.data });
+        this.setState({ id: id, data: response.data.adv });
       })
       .catch(() => console.log("Error in handleClick"));
   }
@@ -41,7 +43,11 @@ class RelatedList extends React.Component {
   getData() {
     Axios.get(`/get/${this.state.category}`)
       .then(response => {
-        this.setState({ data: response.data });
+        this.setState({
+          data: response.data.adv,
+          category: response.data.cat[0].type,
+          cat_img: response.data.cat[0].image
+        });
         console.log("new data: ", response.data);
       })
       .catch(err => console.log("error coming back from DB", err));
@@ -62,10 +68,10 @@ class RelatedList extends React.Component {
   render() {
     return (
       <div style={headerSheet}>
-        <Header category={this.state.category} />
+        <Header category={this.state.category} img={this.state.cat_img} />
         <div href="#" style={styleSheet}>
           {this.state.data.map((adventure, key) => {
-            if (adventure.id.low === this.state.id) {
+            if (adventure.id === this.state.id) {
               return;
             } else {
               return (
@@ -73,6 +79,7 @@ class RelatedList extends React.Component {
                   selectAdventure={this.selectAdventure.bind(this)}
                   key={key}
                   data={adventure}
+                  cat={this.state.category}
                 />
               );
             }

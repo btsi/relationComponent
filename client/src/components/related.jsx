@@ -31,12 +31,10 @@ let RelatedEntry = props => {
   return (
     <div
       style={componentStyle}
-      onClick={() =>
-        props.selectAdventure(props.data.id.low, props.data.category)
-      }>
+      onClick={() => props.selectAdventure(props.data.id, props.cat)}>
       <img href="#" style={imgStyle} src={props.data.image} />
       <div style={titleStyle}>{props.data.title}</div>
-      <div style={priceStyle}>${props.data.price.low}</div>
+      <div style={priceStyle}>${props.data.price}</div>
       <div>Ask about our group rates!</div>
     </div>
   );

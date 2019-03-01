@@ -10,13 +10,15 @@ module.exports = {
   get: (category, cb) => {
     session
       .run(
-        `MATCH(a:Adventure)-[:BELONGS_TO]->(:Category {type: "${category}"}) RETURN a`
+        `MATCH(a:Adventure)-[:BELONGS_TO]->(c:Category {type: "${category}"}) RETURN a, c`
       )
       .then(result => {
-        let data = [];
+        let data = { adv: [], cat: [] };
         result.records.forEach(record => {
-          data.push(record._fields[0].properties);
+          data.adv.push(record._fields[0].properties);
+          data.cat.push(record._fields[1].properties);
         });
+        console.log("---------------------------", data);
         cb(null, data);
       })
       .catch(err => cb(err));
