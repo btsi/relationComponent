@@ -1,30 +1,63 @@
 const ObjectsToCsv = require("objects-to-csv");
 const faker = require("faker");
+const fs = require("fs");
 
-(async () => {
+const bigString = () =>
+  `${faker.fake(
+    "{{commerce.color}} {{commerce.productAdjective}} {{commerce.productMaterial}}"
+  )},${faker.image.image()},${faker.lorem.sentence()},${faker.finance.amount()},${faker.fake(
+    "{{commerce.productAdjective}} {{commerce.department}}"
+  )},${faker.image.avatar()}\n`;
+
+const writeCSV = (() => {
   const start = process.hrtime();
-  const data = [];
-  for (let i = 1; i < 500001; i++) {
-    const obj = {
-      id: i,
-      title: faker.fake(
-        "{{commerce.color}} {{commerce.productAdjective}} {{commerce.productMaterial}}"
-      ),
-      image: faker.image.image(),
-      description: faker.lorem.sentence(),
-      price: faker.finance.amount(),
-      category: faker.fake(
-        "{{commerce.productAdjective}} {{commerce.department}}"
-      ),
-      cat_img: faker.image.avatar()
-    };
-    data.push(obj);
+  const stream = fs.createWriteStream("./seed/seed.csv");
+  for (let i = 0; i < 10000000; i++) {
+    stream.write(bigString());
   }
-  let csv = new ObjectsToCsv(data);
-  await csv.toDisk("./seed/seed.csv");
   const end = process.hrtime(start);
-  console.info("Execution time: %ds %dms", end[0], end[1] / 1000000);
+  console.info(
+    "Execution time: %dm %ds %dms",
+    end[0] / 60,
+    end[0] % 60,
+    end[1] / 1000000
+  );
 })();
+
+// async function write(c) {
+//   const start = process.hrtime();
+//   let mod = c * 500000;
+//   const data = [];
+//   for (let i = mod + 1; i < mod + 500001; i++) {
+//     const obj = {
+//       id: i,
+//       title: faker.fake(
+//         "{{commerce.color}} {{commerce.productAdjective}} {{commerce.productMaterial}}"
+//       ),
+//       image: faker.image.image(),
+//       description: faker.lorem.sentence(),
+//       price: faker.finance.amount(),
+//       category: faker.fake(
+//         "{{commerce.productAdjective}} {{commerce.department}}"
+//       ),
+//       cat_img: faker.image.avatar()
+//     };
+//     data.push(obj);
+//   }
+//   let csv = new ObjectsToCsv(data);
+//   await csv.toDisk("./seed/seed.csv");
+//   const end = process.hrtime(start);
+//   console.info("Execution time: %ds %dms", end[0], end[1] / 1000000);
+// }
+
+// (function() {
+//   let c = 0;
+//   while (c < 20) {
+//     write(c);
+//     console.log("completed loop#", c + 1);
+//     c++;
+//   }
+// })();
 
 // const cats = {};
 

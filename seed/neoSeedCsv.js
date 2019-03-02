@@ -4,18 +4,14 @@ const { join } = require("path");
 
 (async () => {
   const start = process.hrtime();
-  const path = join(__dirname, "/seed.csv.zip");
+  const path = join(__dirname, "/seed.csv");
 
   const empty = "MATCH (n) DETACH DELETE n";
 
   const fill = `
                 USING PERIODIC COMMIT 500
                 LOAD CSV WITH HEADERS FROM 'file:///${path}' AS row
-                CREATE (a:Adventure {id:row.id})
-                  SET a.title = row.title,
-                  a.image = row.image,
-                  a.description = row.description,
-                  a.price = row.price
+                CREATE (a:Adventure {title:row.title, description:row.description, price:row.price})
                 MERGE (c:Category {type: row.category})  SET c.image = row.cat_img
                 CREATE (a)-[:BELONGS_TO]->(c)`;
 
@@ -25,9 +21,6 @@ const { join } = require("path");
   console.info("Empty time: %ds %dms", end1[0], end1[1] / 1000000);
 
   const start2 = process.hrtime();
-  await session.run(
-    "CREATE CONSTRAINT ON (c:Category) assert c.category IS UNIQUE;"
-  );
   await session.run(fill);
   const end2 = process.hrtime(start2);
   console.info("Fill time: %ds %dms", end2[0], end2[1] / 1000000);
