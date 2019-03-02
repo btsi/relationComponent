@@ -2,40 +2,74 @@ const db = require("../database/neo4j");
 const session = db.session;
 const { join } = require("path");
 
-const empty = (() => {
-  const query = "MATCH (n) DETACH DELETE n";
-  session
-    .run(query)
-    .then(() => {
-      console.log("db emptied");
-    })
-    .catch(err => console.log(err));
-})();
-
-const fill = (() => {
+(async () => {
+  const start = process.hrtime();
   const path = join(__dirname, "/seed.csv");
-  const query = `LOAD CSV WITH HEADERS FROM 'file:///${path}' AS row
-  MERGE (a:Adventure {id:row.id}) ON CREATE SET a.title = row.title,
-                a.image = row.image,
-                a.description = row.description,
-                a.price = row.price
 
-  MERGE (c:Category {type: row.category}) ON CREATE SET c.image = row.cat_img
-  MERGE (a)-[:BELONGS_TO]->(c)`;
-  session
-    .run(query)
-    .then(stuff => {
-      console.log("No errors boss");
-    })
-    .catch(err => console.log(err));
+  const empty = "MATCH (n) DETACH DELETE n";
+
+  const fill = `USING PERIODIC COMMIT 500
+                LOAD CSV WITH HEADERS FROM 'file:///${path}' AS row
+                CREATE (a:Adventure {id:row.id})
+                  SET a.title = row.title,
+                  a.image = row.image,
+                  a.description = row.description,
+                  a.price = row.price
+                MERGE (c:Category {type: row.category})  SET c.image = row.cat_img
+                CREATE (a)-[:BELONGS_TO]->(c)`;
+
+  const start1 = process.hrtime();
+  await session.run(empty);
+  const end1 = process.hrtime(start1);
+  console.info("Empty time: %ds %dms", end1[0], end1[1] / 1000000);
+
+  const start2 = process.hrtime();
+  await session.run(fill);
+  const end2 = process.hrtime(start2);
+  console.info("Fill time: %ds %dms", end2[0], end2[1] / 1000000);
+
+  const end = process.hrtime(start);
+  console.info("Total time: %ds %dms", end[0], end[1] / 1000000);
+  process.exit();
 })();
-// const path = join(__dirname, "/seed.csv");
 
-// console.log(path);
+// const advPath = join(__dirname, "/adventures.csv");
+// const catPath = join(__dirname, "/categories.csv");
 
-// const path = join(__dirname, "/seed.csv");
+// const empty = () => {
+//   session.run("MATCH (n) DETACH DELETE n");
+// };
 
-// session
-//   .run(`LOAD CSV WITH HEADERS FROM 'file:///${path}' AS row RETURN count(*);`)
-//   .then(() => console.log("did this"))
-//   .catch();
+// const adv = `USING PERIODIC COMMIT 500
+//                LOAD CSV WITH HEADERS FROM 'file:///${advPath}' AS row
+//                CREATE (a:Adventure {id:row.id})
+//                   SET a.title = row.title,
+//                       a.image = row.image,
+//                       a.description = row.description,
+//                       a.price = row.price`;
+// const cat = `USING PERIODIC COMMIT 500
+//                LOAD CSV WITH HEADERS FROM 'file:///${catPath}' AS row
+//                CREATE (c:Category {id:row.id})
+//                   SET c.type = row.type,
+//                       c.image = row.image`;
+
+// const relate = `USING PERIODIC COMMIT 500
+//                  LOAD CSV WITH HEADERS FROM 'file:///${advPath}' AS row
+//                  MATCH (a:Adventure {id:row.id})
+//                  MATCH (c:Category {type:row.category})
+//                  CREATE (a)-[rel:BELONGS_TO]->(c)`;
+
+// (async () => {
+//   const start = process.hrtime();
+
+//   await session.run("MATCH (n) DETACH DELETE n");
+//   console.log("emptied");
+//   session.run(cat);
+//   await session.run(adv);
+//   console.log("loaded");
+//   await session.run(relate);
+
+//   const end = process.hrtime(start);
+//   console.info("Execution time: %ds %dms", end[0], end[1] / 1000000);
+//   process.exit();
+// })();

@@ -18,7 +18,6 @@ module.exports = {
           data.adv.push(record._fields[0].properties);
           data.cat.push(record._fields[1].properties);
         });
-        console.log("---------------------------", data);
         cb(null, data);
       })
       .catch(err => cb(err));

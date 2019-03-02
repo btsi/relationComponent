@@ -48,7 +48,6 @@ class RelatedList extends React.Component {
           category: response.data.cat[0].type,
           cat_img: response.data.cat[0].image
         });
-        console.log("new data: ", response.data);
       })
       .catch(err => console.log("error coming back from DB", err));
   }
