@@ -11,14 +11,14 @@ const bigString = () =>
 
 const writeCSV = (() => {
   const start = process.hrtime();
-  const stream = fs.createWriteStream("./seed/seed.csv");
-  for (let i = 0; i < 10000000; i++) {
+  const stream = fs.createWriteStream("./seed/seed.csv", { flags: "a" });
+  for (let i = 0; i < 1000000; i++) {
     stream.write(bigString());
   }
   const end = process.hrtime(start);
   console.info(
     "Execution time: %dm %ds %dms",
-    end[0] / 60,
+    Math.floor(end[0] / 60),
     end[0] % 60,
     end[1] / 1000000
   );
