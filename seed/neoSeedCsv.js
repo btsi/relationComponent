@@ -11,7 +11,7 @@ const { join } = require("path");
   const fill = `
                 USING PERIODIC COMMIT 500
                 LOAD CSV WITH HEADERS FROM 'file:///${path}' AS row
-                CREATE (a:Adventure {title:row.title, description:row.description, price:row.price})
+                CREATE (a:Adventure {id:row.id, title:row.title, image:row.image, description:row.description, price:row.price})
                 MERGE (c:Category {type: row.category})  SET c.image = row.cat_img
                 CREATE (a)-[:BELONGS_TO]->(c)`;
 

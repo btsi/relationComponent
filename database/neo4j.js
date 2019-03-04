@@ -2,7 +2,7 @@ const neo4j = require("neo4j-driver").v1;
 
 const driver = neo4j.driver(
   "bolt://localhost",
-  neo4j.auth.basic("neo4j", "practice")
+  neo4j.auth.basic("neo4j", "gandalf")
 );
 const session = driver.session();
 
@@ -10,7 +10,7 @@ module.exports = {
   get: (category, cb) => {
     session
       .run(
-        `MATCH(a:Adventure)-[:BELONGS_TO]->(c:Category {type: "${category}"}) RETURN a, c`
+        `MATCH(a:Adventure)-[:BELONGS_TO]->(c:Category {type: "${category}"}) RETURN a, c LIMIT 25`
       )
       .then(result => {
         let data = { adv: [], cat: [] };
