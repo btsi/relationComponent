@@ -24,6 +24,9 @@ async function writeAdventures(c) {
   let mod = c * 100000;
   const data = [];
   for (let i = mod + 1; i < mod + 100001; i++) {
+    const category = faker.fake(
+      "{{commerce.productAdjective}} {{commerce.department}}"
+    );
     const obj = {
       id: i,
       title: faker.fake(
@@ -31,14 +34,11 @@ async function writeAdventures(c) {
       ),
       image: faker.image.image(),
       description: faker.lorem.sentence(),
-      price: faker.finance.amount(),
-      category: faker.fake(
-        "{{commerce.productAdjective}} {{commerce.department}}"
-      ),
-      cat_id: Math.floor(Math.random() * 374 + 1)
+      price: Math.floor(faker.finance.amount()),
+      cat_id: Math.floor(Math.random() * 374) + 1
     };
     data.push(obj);
-    cats[obj.category] = true;
+    cats[category] = true;
   }
   let csv = new ObjectsToCsv(data);
   await csv.toDisk("./seed/adventures.csv", { append: true });

@@ -1,9 +1,9 @@
 let express = require("express");
 let bodyParse = require("body-parser");
-// let db = require('../database/index')
+// let db = require('../database/index') // mongoDB
+// const db = require("../database/neo4j"); // neo4j db
+const db = require("../database/psql"); // psql db
 let cors = require("cors");
-
-const db = require("../database/neo4j");
 
 let app = express();
 let port = process.env.port || 3003;

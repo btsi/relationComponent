@@ -2,3 +2,5 @@ node_modules
 client/dist/bundle.js
 .env
 seed/seed.csv
+seed/adventures.csv
+seed/categories.csv
