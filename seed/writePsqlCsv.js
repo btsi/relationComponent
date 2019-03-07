@@ -2,10 +2,10 @@ const ObjectsToCsv = require("objects-to-csv");
 const faker = require("faker");
 
 const cats = {};
-
 (async function() {
+  const start1 = process.hrtime();
   let c = 0;
-  while (c < 1) {
+  while (c < 20) {
     const start = process.hrtime();
     await writeAdventures(c);
     const end = process.hrtime(start);
@@ -18,12 +18,19 @@ const cats = {};
     c++;
   }
   writeCatagories();
+  const end1 = process.hrtime(start1);
+  console.info(
+    `Total Execution time: %dm %ds %dms`,
+    Math.floor(end1[0] / 60),
+    end1[0] % 60,
+    end1[1] / 1000000
+  );
 })();
 
 async function writeAdventures(c) {
-  let mod = c * 100000;
+  let mod = c * 500000;
   const data = [];
-  for (let i = mod + 1; i < mod + 100001; i++) {
+  for (let i = mod + 1; i < mod + 500001; i++) {
     const category = faker.fake(
       "{{commerce.productAdjective}} {{commerce.department}}"
     );
@@ -49,9 +56,9 @@ async function writeCatagories() {
   const data = [];
   for (cat in cats) {
     const obj = {
-      id: i,
+      cat_id: i,
       type: cat,
-      image: faker.image.avatar()
+      cat_image: faker.image.avatar()
     };
     data.push(obj);
     i++;

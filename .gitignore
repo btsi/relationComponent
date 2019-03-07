@@ -4,3 +4,4 @@ client/dist/bundle.js
 seed/seed.csv
 seed/adventures.csv
 seed/categories.csv
+newrelic_agent.log

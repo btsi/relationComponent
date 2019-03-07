@@ -1,0 +1,19 @@
+config:
+  target: "https://artillery.io"
+  phases:
+    - duration: 5
+      arrivalRate: 100
+  payload:
+    path: "seed/categories.csv"
+    fields: "cat_id"
+  variables:
+    category:
+      - "Sleek Shoes"
+      - "Refined Books"
+      - "Fantastic Computers"
+      - "Handcrafted Sports"
+      - "Licensed Baby"
+scenarios:
+  - flow:
+      - get:
+          url: "/category/{{ cat_id }}"

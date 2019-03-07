@@ -19,6 +19,7 @@ class RelatedList extends React.Component {
     this.state = {
       id: 10,
       category: "Sleek Shoes",
+      cat_id: Math.floor(Math.random() * 374 + 1),
       cat_img: "",
       data: []
     };
@@ -33,27 +34,48 @@ class RelatedList extends React.Component {
   }
 
   handleClick(id, category) {
-    Axios.get(`/get/${category}`)
-      .then(response => {
-        this.setState({ id: id, data: response.data.adv });
-      })
-      .catch(() => console.log("Error in handleClick"));
+    this.setState({ id: id }, () => this.get());
   }
 
-  getData() {
-    Axios.get(`/get/${this.state.category}`)
+  // getData() {
+  //   Axios.get(`/get/${this.state.category}`)
+  //     .then(response => {
+  //       // neo4j
+  //       // this.setState({
+  //       //   data: response.data.adv,
+  //       //   category: response.data.cat[0].type,
+  //       //   cat_img: response.data.cat[0].image
+  //       // });
+  //       this.setState({
+  //         data: response.data,
+  //         category: response.data[0].type,
+  //         cat_img: response.data[0].cat_image
+  //       });
+  //     })
+  //     .catch(err => console.log("error coming back from DB", err));
+  // }
+
+  get() {
+    Axios.get(`/get/${this.state.cat_id}`)
       .then(response => {
+        // neo4j
+        // this.setState({
+        //   data: response.data.adv,
+        //   category: response.data.cat[0].type,
+        //   cat_img: response.data.cat[0].image
+        // });
         this.setState({
-          data: response.data.adv,
-          category: response.data.cat[0].type,
-          cat_img: response.data.cat[0].image
+          data: response.data,
+          category: response.data[0].type,
+          cat_img: response.data[0].cat_image,
+          cat_id: response.data[0].cat_id
         });
       })
       .catch(err => console.log("error coming back from DB", err));
   }
 
   componentDidMount() {
-    this.getData();
+    this.get();
     window.addEventListener(
       "changeID",
       event => {

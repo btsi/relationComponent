@@ -1,11 +1,11 @@
 exports.up = function(knex, Promise) {
   let createQuery = `CREATE TABLE adventures(
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     title TEXT,
     image TEXT,
     description TEXT,
     price INTEGER,
-    cat_id INTEGER REFERENCES categories(id)
+    cat_id INTEGER REFERENCES categories(cat_id)
   )`;
 
   return knex.raw(createQuery);

@@ -1,3 +1,4 @@
+require("newrelic");
 let express = require("express");
 let bodyParse = require("body-parser");
 // let db = require('../database/index') // mongoDB
