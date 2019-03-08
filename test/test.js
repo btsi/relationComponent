@@ -8,8 +8,8 @@ chai.use(chaiHttp);
 
 const foo = "bar";
 
-describe("GET", () => {
-  it("should respond with status code 200", () => {
+describe("GET /test", () => {
+  it("should respond with status code 200", done => {
     chai
       .request(server)
       .get("/test")
@@ -19,7 +19,7 @@ describe("GET", () => {
       });
   });
 
-  it("should respond with an array", () => {
+  it("should respond with an array", done => {
     chai
       .request(server)
       .get("/test")
@@ -29,29 +29,28 @@ describe("GET", () => {
       });
   });
 
-  it("should contain 25 elements", () => {
+  it("should contain 25 elements", done => {
     chai
       .request(server)
       .get("/test")
       .end((err, res) => {
-        res.body.length.should.be(25);
+        res.body.length.should.equal(25);
         done();
       });
   });
 
-  // it("should contain adventure objects with correct properties", () => {
-  //   chai
-  //     .request(server)
-  //     .get("/test")
-  //     .end((err, res) => {
-  //       let adventure = res.body[0];
-  //       console.log(res.body);
-  //       adventure.should.be.an("object");
-  //       adventure.should.have.property("title");
-  //       adventure.should.have.property("image");
-  //       adventure.should.have.property("description");
-  //       adventure.should.have.property("price");
-  //       done();
-  //     });
-  // });
+  it("should contain adventure objects with correct properties", done => {
+    chai
+      .request(server)
+      .get("/test")
+      .end((err, res) => {
+        let adventure = res.body[0];
+        adventure.should.be.an("object");
+        adventure.should.have.property("title");
+        adventure.should.have.property("image");
+        adventure.should.have.property("description");
+        adventure.should.have.property("price");
+        done();
+      });
+  });
 });
