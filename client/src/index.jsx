@@ -69,7 +69,7 @@ class RelatedList extends React.Component {
       <div style={headerSheet}>
         <Header category={this.state.category} img={this.state.cat_img} />
         <div href="#" style={styleSheet}>
-          {this.state.data.map((adventure, key) => {
+          {this.state.data.slice(0, 50).map((adventure, key) => {
             if (adventure.id === this.state.id) {
               return;
             } else {

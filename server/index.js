@@ -29,8 +29,12 @@ app.get("/test", (req, res) => {
   let random = Math.floor(Math.random() * 374 + 1);
 
   db.get(random, (err, response) => {
-    if (err) res.sendStatus(500);
-    res.json(response);
+    const data = {
+      adventures: response.adventures.rows,
+      category: response.category.rows[0]
+    };
+    if (err) console.log(err);
+    res.json(data);
   });
 });
 

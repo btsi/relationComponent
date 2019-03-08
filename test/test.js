@@ -19,22 +19,22 @@ describe("GET /test", () => {
       });
   });
 
-  it("should respond with an array", done => {
+  it("should respond with an object", done => {
     chai
       .request(server)
       .get("/test")
       .end((err, res) => {
-        res.body.should.be.an("array");
+        res.body.should.be.an("object");
         done();
       });
   });
 
-  it("should contain 25 elements", done => {
+  it("should contain an adventures array", done => {
     chai
       .request(server)
       .get("/test")
       .end((err, res) => {
-        res.body.length.should.equal(25);
+        res.body.adventures.should.be.an("array");
         done();
       });
   });
@@ -44,12 +44,22 @@ describe("GET /test", () => {
       .request(server)
       .get("/test")
       .end((err, res) => {
-        let adventure = res.body[0];
+        let adventure = res.body.adventures[0];
         adventure.should.be.an("object");
         adventure.should.have.property("title");
         adventure.should.have.property("image");
         adventure.should.have.property("description");
         adventure.should.have.property("price");
+        done();
+      });
+  });
+
+  it("should contain a category object", done => {
+    chai
+      .request(server)
+      .get("/test")
+      .end((err, res) => {
+        res.body.category.should.be.an("object");
         done();
       });
   });

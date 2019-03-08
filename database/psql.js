@@ -4,11 +4,7 @@ var knex = require("knex")(config[env]);
 
 module.exports = {
   get: (category, cb) => {
-    // const query = `SELECT * FROM adventures INNER JOIN categories
-    //                 ON adventures.cat_id = categories.cat_id AND categories.type = '${category}'
-    //                 LIMIT 25;`;
-
-    const advQuery = `SELECT * FROM adventures WHERE cat_id = ${category} LIMIT 30`;
+    const advQuery = `SELECT * FROM adventures WHERE cat_id = ${category}`;
     const catQuery = `SELECT * FROM categories WHERE cat_id = ${category}`;
 
     knex
