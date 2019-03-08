@@ -13,7 +13,7 @@ app.use(bodyParse.json());
 app.use(express.static(__dirname + "/../client/dist"));
 app.use(cors());
 
-app.get("/get/:category", (req, res) => {
+app.get("/adventures/:category", (req, res) => {
   let category = req.params.category;
   db.get(category, (err, response) => {
     if (err) console.log(err);
@@ -21,6 +21,17 @@ app.get("/get/:category", (req, res) => {
   });
 });
 
+app.get("/test", (req, res) => {
+  let random = Math.floor(Math.random() * 374 + 1);
+
+  db.get(random, (err, response) => {
+    if (err) res.sendStatus(500);
+    res.json(response);
+  });
+});
+
 //USE PORT 3003!!!
 
 app.listen(port, () => console.log("listening to port: ", port));
+
+module.exports = app;

@@ -1,19 +1,9 @@
 config:
-  target: "https://artillery.io"
+  target: "http://localhost:3003"
   phases:
-    - duration: 5
-      arrivalRate: 100
-  payload:
-    path: "seed/categories.csv"
-    fields: "cat_id"
-  variables:
-    category:
-      - "Sleek Shoes"
-      - "Refined Books"
-      - "Fantastic Computers"
-      - "Handcrafted Sports"
-      - "Licensed Baby"
+    - duration: 30
+      arrivalRate: 200
 scenarios:
   - flow:
       - get:
-          url: "/category/{{ cat_id }}"
+          url: "/test"

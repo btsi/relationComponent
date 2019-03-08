@@ -56,7 +56,7 @@ class RelatedList extends React.Component {
   // }
 
   get() {
-    Axios.get(`/get/${this.state.cat_id}`)
+    Axios.get(`/adventures/${this.state.cat_id}`)
       .then(response => {
         // neo4j
         // this.setState({
