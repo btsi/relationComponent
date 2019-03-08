@@ -37,38 +37,16 @@ class RelatedList extends React.Component {
     this.setState({ id: id }, () => this.get());
   }
 
-  // getData() {
-  //   Axios.get(`/get/${this.state.category}`)
-  //     .then(response => {
-  //       // neo4j
-  //       // this.setState({
-  //       //   data: response.data.adv,
-  //       //   category: response.data.cat[0].type,
-  //       //   cat_img: response.data.cat[0].image
-  //       // });
-  //       this.setState({
-  //         data: response.data,
-  //         category: response.data[0].type,
-  //         cat_img: response.data[0].cat_image
-  //       });
-  //     })
-  //     .catch(err => console.log("error coming back from DB", err));
-  // }
-
   get() {
     Axios.get(`/adventures/${this.state.cat_id}`)
       .then(response => {
-        // neo4j
-        // this.setState({
-        //   data: response.data.adv,
-        //   category: response.data.cat[0].type,
-        //   cat_img: response.data.cat[0].image
-        // });
+        console.log(response.data.category);
+
         this.setState({
-          data: response.data,
-          category: response.data[0].type,
-          cat_img: response.data[0].cat_image,
-          cat_id: response.data[0].cat_id
+          data: response.data.adventures,
+          category: response.data.category.type,
+          cat_img: response.data.category.cat_image,
+          cat_id: response.data.category.cat_id
         });
       })
       .catch(err => console.log("error coming back from DB", err));

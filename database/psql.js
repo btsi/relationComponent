@@ -8,14 +8,16 @@ module.exports = {
     //                 ON adventures.cat_id = categories.cat_id AND categories.type = '${category}'
     //                 LIMIT 25;`;
 
-    const query = `SELECT * FROM adventures INNER JOIN categories
-                    ON adventures.cat_id = categories.cat_id AND adventures.cat_id = ${category}
-                    LIMIT 25`;
+    const advQuery = `SELECT * FROM adventures WHERE cat_id = ${category} LIMIT 30`;
+    const catQuery = `SELECT * FROM categories WHERE cat_id = ${category}`;
 
     knex
-      .raw(query)
-      .then(result => {
-        cb(null, result.rows);
+      .raw(advQuery)
+      .then(adventures => {
+        knex.raw(catQuery).then(category => {
+          const data = { adventures, category };
+          cb(null, data);
+        });
       })
       .catch(err => cb(err));
   }

@@ -16,8 +16,12 @@ app.use(cors());
 app.get("/adventures/:category", (req, res) => {
   let category = req.params.category;
   db.get(category, (err, response) => {
+    const data = {
+      adventures: response.adventures.rows,
+      category: response.category.rows[0]
+    };
     if (err) console.log(err);
-    res.json(response);
+    res.json(data);
   });
 });
 
