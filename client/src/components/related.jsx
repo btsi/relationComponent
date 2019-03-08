@@ -23,6 +23,13 @@ let titleStyle = {
   fontSize: "10px"
 };
 
+let titleStyle = {
+  whiteSpace: "no-wrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  fontSize: "10px"
+};
+
 let priceStyle = {
   fontWeight: "bold"
 };
